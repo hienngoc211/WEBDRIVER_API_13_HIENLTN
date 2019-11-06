@@ -1,5 +1,8 @@
 package webdriver_api;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -14,8 +17,12 @@ import org.testng.annotations.Test;
 public class Topic_03_Xpath_Part1_Ex_Finished {
 	//Khai báo một biến driver đại diện cho Selenium 
 	WebDriver driver;
-	String username = "mngr231005";
-	String password = "duvabyq";
+	// String username = "mngr231005";
+	// String password = "duvabyq";
+	String firstName = "automation";
+	String lastName = "Testing";	
+	String validEmail = "automation_13@gmail.com";
+	String validPassword  = "123123";
 	
  //Pre-condition
 	@BeforeClass
@@ -93,9 +100,17 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 	
 	@Test
 	public void TC_05_LoginwwithEmailandPasswordValidorCorrect() {
-		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("automation_13@gmail.com");
-		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123123");
+		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("validEmail");
+		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("validPassword");
 		driver.findElement(By.xpath("//button[@id='send2']")).click();
+		
+		// Cách 1: Dùng hàm assertTrue (điều kiện) -> locator được hiển thị (isDisplayed) 
+		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello, Automation Testing!']")).isDisplayed());
+		
+		
+		// Cách 2: Dùng hàm assertEquals (điều kiện 1, điều kiện 2) -> getText() - actual result, expected result (text cố định)
+		
+		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "My Dashboard");
 		
 		String myaccMsg = driver.findElement(By.xpath("//div[@ class='col-main']//h1")).getText();
 		Assert.assertEquals(myaccMsg,"MY DASHBOARD");
