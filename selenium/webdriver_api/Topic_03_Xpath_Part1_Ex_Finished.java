@@ -1,8 +1,5 @@
 package webdriver_api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -100,33 +97,25 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 	
 	@Test
 	public void TC_05_LoginwwithEmailandPasswordValidorCorrect() {
-		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("validEmail");
-		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("validPassword");
+		driver.findElement(By.xpath("//input[@id='email']")).sendKeys(validEmail);
+		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(validPassword);
 		driver.findElement(By.xpath("//button[@id='send2']")).click();
 		
 		// Cách 1: Dùng hàm assertTrue (điều kiện) -> locator được hiển thị (isDisplayed) 
-		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello, Automation Testing!']")).isDisplayed());
-		
+		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello," + firstName + " " + lastName + "!']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(text(),'"+ firstName + " " + lastName + "')]")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(.,'" + validEmail + "')]")).isDisplayed());
+
 		
 		// Cách 2: Dùng hàm assertEquals (điều kiện 1, điều kiện 2) -> getText() - actual result, expected result (text cố định)
 		
-		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "My Dashboard");
+		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOAR");
 		
-		String myaccMsg = driver.findElement(By.xpath("//div[@ class='col-main']//h1")).getText();
-		Assert.assertEquals(myaccMsg,"MY DASHBOARD");
-		
-		String accdashboardMsg = driver.findElement(By.xpath("//p[@class='hello']//strong")).getText();
-		Assert.assertEquals(accdashboardMsg,"Hello, Automation Testing!");
-		
-		driver.findElement(By.xpath("//div[@class='box-content']//p[contains(text(),'Automation Testing')]")).getText();
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='box-content']//p[contains(text(),'Automation Testing')]")).isDisplayed());
-
-
-
+			
 		
 		// If not login in TC 5, when click to my Account will redirect to detail account page in TC 6
-			driver.findElement(By.xpath("//div[@class='account-cart-wrapper']//span[text()='Account']")).click();
-			driver.findElement(By.xpath("//a[@title='Log Out'] ")).click();
+			// driver.findElement(By.xpath("//div[@class='account-cart-wrapper']//span[text()='Account']")).click();
+			// driver.findElement(By.xpath("//a[@title='Log Out'] ")).click();
 	}	
 	
 	@Test
