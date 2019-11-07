@@ -1,9 +1,11 @@
 package webdriver_api;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -16,9 +18,9 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 	WebDriver driver;
 	// String username = "mngr231005";
 	// String password = "duvabyq";
-	String firstName = "automation";
-	String lastName = "Testing";	
-	String validEmail = "automation_13@gmail.com";
+	String firstName = "Selenium";
+	String lastName = "Acvanced";	
+	String validEmail = "automation_13@gmail.com" +randomNumber() + "@gmail.com";
 	String validPassword  = "123123";
 	
  //Pre-condition
@@ -94,9 +96,27 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 		Assert.assertEquals(PasswordErrorMsg,"Invalid login or password.");
 		
 	} 
+	@Test
+	public void TC_05_CreateNewAccount() {
+		driver.findElement(By.xpath("//span[text()='Create an Account']")).click();
+		driver.findElement(By.xpath("//input[@id='firstname']")).sendKeys(firstName);
+		driver.findElement(By.xpath("//input[@id='lastname']")).sendKeys(lastName);
+		driver.findElement(By.xpath("//input[@id='email_address']")).sendKeys(validEmail);
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(validPassword);
+		driver.findElement(By.xpath("//input[@id='confirmation']")).sendKeys(validPassword);
+		driver.findElement(By.xpath("//button[@title='Register']")).click();
+		
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='success-msg']//span[text()='Thank you for registering with Main Website Store.'])")).isDisplayed());
+		
+		
+		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello," + firstName + " " + lastName + "!']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(text(),'"+ firstName + " " + lastName + "')]")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(.,'" + validEmail + "')]")).isDisplayed());
+		
+	}
 	
 	@Test
-	public void TC_05_LoginwwithEmailandPasswordValidorCorrect() {
+	public void TC_06_LoginwwithEmailandPasswordValidorCorrect() {
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys(validEmail);
 		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(validPassword);
 		driver.findElement(By.xpath("//button[@id='send2']")).click();
@@ -118,20 +138,7 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 			// driver.findElement(By.xpath("//a[@title='Log Out'] ")).click();
 	}	
 	
-	@Test
-	public void TC_06_CreatAnAccount() {
-		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
-		driver.findElement(By.xpath("//input[@id='firstname']")).sendKeys("Le");
-		driver.findElement(By.xpath("//input[@id='middlename']")).sendKeys("Ngoc");
-		driver.findElement(By.xpath("//input[@id='lastname']")).sendKeys("Hien");
-		driver.findElement(By.xpath("//input[@id='email_address']")).sendKeys("ngochien123@gmail.com");
-		driver.findElement(By.xpath("//input[@id='password']")).sendKeys("12345678");
-		driver.findElement(By.xpath("//input[@id='confirmation']")).sendKeys("12345678");
-		driver.findElement(By.xpath("//button[@title='Register']")).click();
-		
-		String SuccessMsg = driver.findElement(By.xpath("//div[@class='my-account']//span")).getText();
-		Assert.assertEquals(SuccessMsg,"Thank you for registering with Main Website Store.");
-	}
+
  //Post - condition
 	@AfterClass
 	public void afterClass() {
@@ -139,5 +146,9 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 	// Tắt trình duyệt 
 	driver.quit();
 	}
-	 
+	 public int randomNumber() {
+		 Random rand = new Random();
+		 int n = rand.nextInt(50);
+		 return n;
+	 }
 	}
