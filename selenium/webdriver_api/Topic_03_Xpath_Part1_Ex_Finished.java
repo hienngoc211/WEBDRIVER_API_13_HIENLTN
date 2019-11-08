@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+@Test
 public class Topic_03_Xpath_Part1_Ex_Finished {
 	//Khai báo một biến driver đại diện cho Selenium 
 	WebDriver driver;
@@ -42,7 +43,6 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 			driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
 		}
 	 
-	@Test
 	public void TC_01_LoginwithEmailandPasswordEmpty() {
 			driver.findElement(By.xpath("//input[@id='email']")).sendKeys("");
 			driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("");
@@ -57,7 +57,6 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 			
 	}
 	
-	@Test
 	public void TC_02_LoginwithEmailIvalid(){
 			driver.findElement(By.xpath("//input[@title='Email Address']")).sendKeys("123434234@12312.123123");
 			driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("");
@@ -71,7 +70,6 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 			
 	}
 	 
-	@Test
 	public void TC_03_LoginwithPasswordlessthan6characters() {
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("");
 		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123");
@@ -85,7 +83,6 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 		
 	}
 	
-	@Test
 	public void TC_04_LoginwithPasswordIncorrect() {
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("automation@gmail.com");
 		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123123123");
@@ -96,8 +93,8 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 		Assert.assertEquals(PasswordErrorMsg,"Invalid login or password.");
 		
 	} 
-	@Test
 	public void TC_05_CreateNewAccount() {
+		
 		driver.findElement(By.xpath("//span[text()='Create an Account']")).click();
 		driver.findElement(By.xpath("//input[@id='firstname']")).sendKeys(firstName);
 		driver.findElement(By.xpath("//input[@id='lastname']")).sendKeys(lastName);
@@ -108,34 +105,36 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 		
 		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='success-msg']//span[text()='Thank you for registering with Main Website Store.'])")).isDisplayed());
 		
-		
+		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOAR");
 		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello," + firstName + " " + lastName + "!']")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(text(),'"+ firstName + " " + lastName + "')]")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(.,'" + validEmail + "')]")).isDisplayed());
 		
+		// If not login in TC 5, when click to my Account will redirect to detail account page in TC 6
+		 driver.findElement(By.xpath("//div[@class='account-cart-wrapper']//span[text()='Account']")).click();
+		 driver.findElement(By.xpath("//a[@title='Log Out'] ")).click();
+		
 	}
 	
-	@Test
 	public void TC_06_LoginwwithEmailandPasswordValidorCorrect() {
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys(validEmail);
 		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(validPassword);
 		driver.findElement(By.xpath("//button[@id='send2']")).click();
 		
+		// Cách 2: Dùng hàm assertEquals (điều kiện 1, điều kiện 2) -> getText() - actual result, expected result (text cố định)
+		
+				Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOAR");
 		// Cách 1: Dùng hàm assertTrue (điều kiện) -> locator được hiển thị (isDisplayed) 
 		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello," + firstName + " " + lastName + "!']")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(text(),'"+ firstName + " " + lastName + "')]")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(.,'" + validEmail + "')]")).isDisplayed());
 
 		
-		// Cách 2: Dùng hàm assertEquals (điều kiện 1, điều kiện 2) -> getText() - actual result, expected result (text cố định)
 		
-		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOAR");
 		
 			
 		
-		// If not login in TC 5, when click to my Account will redirect to detail account page in TC 6
-			// driver.findElement(By.xpath("//div[@class='account-cart-wrapper']//span[text()='Account']")).click();
-			// driver.findElement(By.xpath("//a[@title='Log Out'] ")).click();
+		
 	}	
 	
 
