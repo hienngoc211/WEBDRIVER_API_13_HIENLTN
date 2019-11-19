@@ -111,8 +111,22 @@ public class Topic_04_Browsers_02 {
 		System.out.println("Step 02 - Click 'My Account' link");
 		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
 		
-		System.out.println("Step 03 - Verify Register Page contain text 'Create an Account'");
-		Assert.assertTrue(driver.getPageSource().contains("Create an Account")); 
+		//System.out.println("Step 03 - Verify Login Page contain 'Login or Create an Account' text");
+		//String loginPageText = driver.findElement(By.xpath("//h1")).getText();
+		//Assert.assertEquals(loginPageText, "LOGIN OR CREATE AN ACCOUNT");
+		
+		System.out.println("Step 03 - Verify Login Page contain 'Login or create an account' text");
+		Assert.assertTrue(driver.getPageSource().contains("Login or Create an Account"));
+
+
+		
+		System.out.println("Step 04 - Click 'Create an Account' button");
+		driver.findElement(By.xpath("//span[text()='Create an Account']")).click();
+		
+		System.out.println("Step 05 - Verify Register page contain 'Create an Account'text");
+		String registerPageText = driver.findElement(By.xpath("//div[@class='page-title']//h1")).getText();
+		Assert.assertEquals(registerPageText, "CREATE AN ACCOUNT");
+
 		
 	}
 	@AfterClass
