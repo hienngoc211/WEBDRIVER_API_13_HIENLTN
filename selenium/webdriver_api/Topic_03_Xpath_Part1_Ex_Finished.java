@@ -18,8 +18,8 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 	WebDriver driver;
 	// String username = "mngr231005";
 	// String password = "duvabyq";
-	String firstName = "Selenium";
-	String lastName = "Advanced";	
+	String firstName = "Ngoc";
+	String lastName = "Hien";	
 	String validEmail = "automation" + randomNumber() + "@gmail.com";
 	String validPassword  = "123123";
 	
@@ -106,9 +106,9 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 		driver.findElement(By.xpath("//input[@id='confirmation']")).sendKeys(validPassword);
 		driver.findElement(By.xpath("//button[@title='Register']")).click();
 		
-		
-		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOAR");
 		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='success-msg']//span[text()='Thank you for registering with Main Website Store.'])")).isDisplayed());
+
+		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOARD");
 		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello," + firstName + " " + lastName + "!']")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(text(),'"+ firstName + " " + lastName + "')]")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(.,'" + validEmail + "')]")).isDisplayed());
@@ -119,13 +119,14 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 	}
 	@Test
 	public void TC_06_LoginwwithEmailandPasswordValidorCorrect() {
+		
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys(validEmail);
 		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(validPassword);
 		driver.findElement(By.xpath("//button[@id='send2']")).click();
 		
 		// Cách 2: Dùng hàm assertEquals (điều kiện 1, điều kiện 2) -> getText() - actual result, expected result (text cố định)
 		
-		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOAR");
+		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOARD");
 		// Cách 1: Dùng hàm assertTrue (điều kiện) -> locator được hiển thị (isDisplayed) 
 		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello," + firstName + " " + lastName + "!']")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(text(),'"+ firstName + " " + lastName + "')]")).isDisplayed());
@@ -137,8 +138,6 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
  //Post - condition
 	@AfterClass
 	public void afterClass() {
-		
-	// Tắt trình duyệt 
 	driver.quit();
 	}
 	 public int randomNumber() {
