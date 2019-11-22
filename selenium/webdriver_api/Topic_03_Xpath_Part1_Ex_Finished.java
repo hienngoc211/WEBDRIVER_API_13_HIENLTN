@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -22,8 +21,10 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 	String lastName = "Hien";	
 	String validEmail = "automation" + randomNumber() + "@gmail.com";
 	String validPassword  = "123123";
-	
+	String emailTC06 = "automation_13@gmail.com";
+
  //Pre-condition
+	
 	@BeforeClass
 	public void beforeClass() {
 		//Khởi tạo trình duyệt 
@@ -123,19 +124,20 @@ public class Topic_03_Xpath_Part1_Ex_Finished {
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys(validEmail);
 		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(validPassword);
 		driver.findElement(By.xpath("//button[@id='send2']")).click();
-		
+	
 		// Cách 2: Dùng hàm assertEquals (điều kiện 1, điều kiện 2) -> getText() - actual result, expected result (text cố định)
 		
 		Assert.assertEquals(driver.findElement(By.xpath("//h1")).getText(), "MY DASHBOARD");
 		// Cách 1: Dùng hàm assertTrue (điều kiện) -> locator được hiển thị (isDisplayed) 
-		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello," + firstName + " " + lastName + "!']")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(text(),'"+ firstName + " " + lastName + "')]")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Hello, " + firstName + " " + lastName + "!']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(text(),'" + firstName + " " + lastName + "')]")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class ='box-content']/p[contains(.,'" + validEmail + "')]")).isDisplayed());
 
 	}	
 	
 
  //Post - condition
+	
 	@AfterClass
 	public void afterClass() {
 	driver.quit();
