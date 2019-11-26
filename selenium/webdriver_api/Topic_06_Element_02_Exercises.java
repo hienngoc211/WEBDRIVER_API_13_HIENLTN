@@ -14,7 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @SuppressWarnings("unused")
-public class Topic_05_Element_02_Exercises {
+public class Topic_06_Element_02_Exercises {
 	WebDriver driver;
 	By emailTextboxBy = By.xpath("//input[@id='mail']");
 	By passwordTextboxBy = By.xpath("//input[@id='password']");
