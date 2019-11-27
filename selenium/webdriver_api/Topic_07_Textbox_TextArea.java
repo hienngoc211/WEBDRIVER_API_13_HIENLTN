@@ -55,8 +55,7 @@ public class Topic_07_Textbox_TextArea {
 	By phoneTextbox = By.name("telephoneno");
 	By emailTextbox = By.name("emailid");
 	By passwordTextbox = By.name("password");
-
-	
+	By submitButton = By.name("sub");
  	@BeforeClass
 	public void beforeClass() {
  		
@@ -91,7 +90,8 @@ public class Topic_07_Textbox_TextArea {
 		driver.findElement(phoneTextbox).sendKeys(phone);
 		driver.findElement(emailTextbox).sendKeys(email);
 		driver.findElement(passwordTextbox).sendKeys(password);
-		
+		driver.findElement(submitButton).click();
+
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='heading3' and text()='Customer Registered Successfully!!!']")).isDisplayed());
 		
 		// Verify output data = input data 
@@ -105,12 +105,11 @@ public class Topic_07_Textbox_TextArea {
 		Assert.assertEquals(pin, driver.findElement(By.xpath("//td[text()='Pin']/following-sibling::td")).getText());
 		Assert.assertEquals(phone, driver.findElement(By.xpath("//td[text()='Mobile No.']/following-sibling::td")).getText());
 		Assert.assertEquals(email, driver.findElement(By.xpath("//td[text()='Email']/following-sibling::td")).getText());
-		driver.findElement(By.xpath("//input[@name='sub']")).click();
 		
-		// Biến cục bộ 
 		
-		customerID = driver.findElement(By.xpath("//td[text()='Customer ID']/following-sibling::td")).getText();
-		System.out.println("Customer ID at New Customer form = " + customerID);
+		
+		 customerID = driver.findElement(By.xpath("//td[text()='Customer ID']/following-sibling::td")).getText();
+		 System.out.println("Customer ID at New Customer form = " + customerID);
 	}
 	@Test
 	public void TC_02_Edit_Customer() {
