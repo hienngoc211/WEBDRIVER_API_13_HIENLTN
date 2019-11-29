@@ -77,24 +77,27 @@ public class Topic_07_Exercise_HTML_Dropdown_list_02 {
 		Assert.assertEquals(yearOfBirth, 112);
 		
 		
-		driver.findElement(By.xpath("//input[@id='Email']")).sendKeys("validEmail");
+		driver.findElement(By.xpath("//input[@id='Email']")).sendKeys(validEmail);
 			Thread.sleep(2000);
-		driver.findElement(By.xpath("//input[@id='Password']")).sendKeys("validPassword");
-		driver.findElement(By.xpath("//input[@id='ConfirmPassword']")).sendKeys("validPassword");
+		driver.findElement(By.xpath("//input[@id='Password']")).sendKeys(validPassword);
+		driver.findElement(By.xpath("//input[@id='ConfirmPassword']")).sendKeys(validPassword);
 
 		driver.findElement(By.xpath("//input[@id='register-button']")).click();
 		
 		 System.out.println("Verify Register page contain 'Create an Account'text");
 		 String myAccount = driver.findElement(By.xpath("//a[text()='My account']")).getText();
 		 Assert.assertEquals(myAccount, "My account");
-		 
+			Thread.sleep(2000);
+
 		 System.out.println("Verify Register page contain 'Log out'text");
 		 String logOut = driver.findElement(By.xpath("//a[text()='Log out']")).getText();
 		 Assert.assertEquals(logOut, "Log out");
+			Thread.sleep(2000);
 
 		 System.out.println("Verify Register page contain 'Your registration completed'text");
 		 String textWelcome = driver.findElement(By.xpath("//div[text()='Your registration completed']")).getText();
 		 Assert.assertEquals(textWelcome, "Your registration completed");
+			Thread.sleep(2000);
 
 
 		}
