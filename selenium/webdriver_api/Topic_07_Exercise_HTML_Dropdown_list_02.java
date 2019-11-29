@@ -42,6 +42,7 @@ public class Topic_07_Exercise_HTML_Dropdown_list_02 {
 	public void TC_01_Displayed() throws Exception {
 		driver.get ("https://demo.nopcommerce.com");
 		driver.findElement(By.xpath("//a[text()='Register']")).click();
+		
 		driver.navigate().refresh();
 		if (isElementDisplayed(maleRadioBy)) {
 			clickToElement(maleRadioBy);
@@ -76,16 +77,26 @@ public class Topic_07_Exercise_HTML_Dropdown_list_02 {
 		Assert.assertEquals(yearOfBirth, 112);
 		
 		
-		driver.findElement(By.name("Email")).sendKeys("johnwick_111222@gmail.com");
+		driver.findElement(By.xpath("//input[@id='Email']")).sendKeys("validEmail");
 			Thread.sleep(2000);
 		driver.findElement(By.xpath("//input[@id='Password']")).sendKeys("validPassword");
 		driver.findElement(By.xpath("//input[@id='ConfirmPassword']")).sendKeys("validPassword");
 
 		driver.findElement(By.xpath("//input[@id='register-button']")).click();
 		
-		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='My account']")).isDisplayed());
+		 System.out.println("Verify Register page contain 'Create an Account'text");
+		 String myAccount = driver.findElement(By.xpath("//a[text()='My account']")).getText();
+		 Assert.assertEquals(myAccount, "My account");
+		 
+		 System.out.println("Verify Register page contain 'Log out'text");
+		 String logOut = driver.findElement(By.xpath("//a[text()='Log out']")).getText();
+		 Assert.assertEquals(logOut, "Log out");
 
-		
+		 System.out.println("Verify Register page contain 'Your registration completed'text");
+		 String textWelcome = driver.findElement(By.xpath("//div[text()='Your registration completed']")).getText();
+		 Assert.assertEquals(textWelcome, "Your registration completed");
+
+
 		}
 		
 	}
