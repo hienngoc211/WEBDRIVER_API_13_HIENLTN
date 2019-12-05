@@ -189,10 +189,49 @@ public class Topic_08_Button_RadioButton_Checkbox_Alert {
 		// alert.getText();
 		
 		// Sendkeys to Alert
-		// alert.sendKeys("");
+		// alert.sendKeys(""); 
 		
 		
 	}
+	
+	@Test
+	public void TC_06_Authentication_Alert() throws Exception {
+		String usernameAndPass = "admin";
+		String url = "http://the-internet.herokuapp.com/basic_auth";
+		
+		url = "http://" + usernameAndPass+ ":" + usernameAndPass + "@the-internet.herokuapp.com/basic_auth";
+		driver.get(url);
+	}
+	
+	@Test
+	public void TC_07_Authentication_Alert() throws Exception {
+		String username = "admin";
+		String password = "admin";
+		
+		driver.get("http://the-internet.herokuapp.com/");
+		WebElement basicAuthenLink = driver.findElement(By.xpath("//a[text()='Basic Auth']"));
+		String url = basicAuthenLink.getAttribute("href");
+		System.out.println("Url = " + url);
+		
+		driver.get(byPassAuthenticationAlert(url, username, password ));
+		Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
+	}
+	
+	public String byPassAuthenticationAlert(String url, String username, String password) {
+		System.out.println("Old Url = " + url);
+		// http://the-internet.herokuapp.com/basic_auth
+		
+		String[] splitUrl = url.split("url");
+		// 01 - http:
+		// 02 - the-internet.herokuapp.com/basic_auth
+		
+		url = splitUrl[0] + "//" + username + ":" + password + "@" + splitUrl[1];
+		
+		// url = http://admin:admin@the-internet.herokuapp.com/basic_auth
+		System.out.println("New Url = " + url);
+		return url;
+	}
+
 	public void  clickByJS(String locator) {
 		WebElement element = driver.findElement(By.xpath(locator));
 		javascript.executeScript("arguments[0].click();", element);
