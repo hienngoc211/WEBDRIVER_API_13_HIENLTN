@@ -107,8 +107,21 @@ List <WebElement> numbers = driver.findElements(By.xpath("//ol[@id='selectable']
 	}
 	@Test
 	public void TC_04_Double_Click() {
+		driver.get("https://automationfc.github.io/basic-form/index.html");
+		
+		
+		action.doubleClick(driver.findElement(By.xpath("//button[text()='Double click me']"))).perform();
+		
+		String demoText = driver.findElement(By.xpath("//p[@id='demo']")).getText();
+		
+		Assert.assertEquals(demoText, "Hello Automation Guys!");
 		
 	}
+	
+	
+	
+	
+	
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
