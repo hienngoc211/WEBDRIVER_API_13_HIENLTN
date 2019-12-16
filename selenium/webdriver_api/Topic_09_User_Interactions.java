@@ -5,9 +5,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.jetty.html.Link;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
@@ -27,9 +29,13 @@ public class Topic_09_User_Interactions {
 	public void beforeClass() {
  		
  		// Capability (config browser)
- 		FirefoxProfile profile = new FirefoxProfile();
- 		profile.setPreference("dome.webnotifications.enabled", false);
- 		driver = new FirefoxDriver();
+ 		// FirefoxProfile profile = new FirefoxProfile();
+ 		// profile.setPreference("dome.webnotifications.enabled", false);
+ 		// driver = new FirefoxDriver();
+ 		 
+ 		System.setProperty("webdriver.chrome.driver", "./libraries/chromedriver");
+ 		driver = new ChromeDriver();
+ 				
 		
 		action = new Actions(driver);
 		
@@ -80,7 +86,8 @@ public class Topic_09_User_Interactions {
 	@Test
 	public void TC_03_Click_And_Hold_Random() {
 		driver.get ("http://jqueryui.com/resources/demos/selectable/display-grid.html");
-List <WebElement> numbers = driver.findElements(By.xpath("//ol[@id='selectable']/li"));
+		
+		List <WebElement> numbers = driver.findElements(By.xpath("//ol[@id='selectable']/li"));
 		
 		int numberSize = numbers.size();
 		System.out.println("Size before click/hold = " + numberSize);
@@ -89,12 +96,10 @@ List <WebElement> numbers = driver.findElements(By.xpath("//ol[@id='selectable']
 		
 		action.click(numbers.get(0))
 				.click(numbers.get(2))
-				.click(numbers.get(4))
-				.click(numbers.get(6))
-				.click(numbers.get(9))
+				.click(numbers.get(5))
+				.click(numbers.get(10))
 				.perform();
-		action.keyUp(numbers.get(0), Keys.CONTROL).perform();
-		
+			
 		List <WebElement> selectedNumbers = driver.findElements(By.xpath("//ol[@id='selectable']/li[(contains(@class,'ui-selected'))]"));
 		System.out.println("Size after click/hold = " + selectedNumbers.size());
 		
@@ -102,25 +107,69 @@ List <WebElement> numbers = driver.findElements(By.xpath("//ol[@id='selectable']
 			System.out.println(number.getText());
 		}
 
-		Assert.assertEquals(selectedNumbers.size(), 5);
+		Assert.assertEquals(selectedNumbers.size(), 4);
 	
 	}
 	@Test
-	public void TC_04_Double_Click() {
+	public void TC_04_Double_Click() throws Exception {
+		
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		
 		
 		action.doubleClick(driver.findElement(By.xpath("//button[text()='Double click me']"))).perform();
 		
+		
 		String demoText = driver.findElement(By.xpath("//p[@id='demo']")).getText();
+		
 		
 		Assert.assertEquals(demoText, "Hello Automation Guys!");
 		
 	}
 	
 	
+	@Test
+	public void TC_05_Right_Click() {
+	
+			driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
+						
+			action.contextClick(findByXpath("//span[text()='right click me']")).perform();
+			
+			action.moveToElement(findByXpath("//span[text()='Quit']")).perform();
+			
+			Assert.assertTrue(isElementDisplayed("//li[contains(@class,'context-menu-visible') and contains (@class,'context-menu-hover')]/span[text()='Quit']"));
+			
+			action.click(findByXpath("//span[text()='Quit']")).perform();
+			
+			
+	}
 	
 	
+	@Test
+	
+	public void TC_06_Drag_AndDrop() throws Exception {
+		
+		driver.get("http://demos.telerik.com/kendo-ui/dragdrop/angular");
+		
+		WebElement sourceCircle = findByXpath("//div[@id='droptarget']");
+		WebElement targetCircle = findByXpath("////div[@id='draggable']");
+		
+		action.dragAndDrop(sourceCircle, targetCircle).perform();
+		
+		Thread.sleep(3000);
+		
+		Assert.assertTrue(isElementDisplayed("//div[@id='droptarget' and text()='You did great!']"));
+		
+		
+	}
+	
+	
+	public WebElement findByXpath(String xpathLocator) {
+		return driver.findElement(By.xpath(xpathLocator));
+	}
+	
+	public boolean isElementDisplayed(String xpathLocator) {
+		return findByXpath(xpathLocator).isDisplayed();
+	}
 	
 	@AfterClass
 	public void afterClass() {
