@@ -3,15 +3,12 @@ package webdriver_api;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.jetty.html.Link;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -19,7 +16,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-@SuppressWarnings("unused")
 public class Topic_09_User_Interactions {
 	WebDriver driver;
 	Actions action;
@@ -44,7 +40,7 @@ public class Topic_09_User_Interactions {
 		
 	}
 	 
-	@Test
+	//@Test
 	public void TC_01_Hover_Move_Mouse() {
 		
 		driver.get ("http://www.myntra.com/");
@@ -57,7 +53,7 @@ public class Topic_09_User_Interactions {
 				
 	}
 	 
-	@Test
+	//@Test
 	public void TC_02_Click_And_Hold() throws Exception {
 		
 		driver.get ("http://jqueryui.com/resources/demos/selectable/display-grid.html");
@@ -110,7 +106,7 @@ public class Topic_09_User_Interactions {
 		Assert.assertEquals(selectedNumbers.size(), 4);
 	
 	}
-	@Test
+	//@Test
 	public void TC_04_Double_Click() throws Exception {
 		
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -121,13 +117,13 @@ public class Topic_09_User_Interactions {
 		
 		String demoText = driver.findElement(By.xpath("//p[@id='demo']")).getText();
 		
-		
+		Thread.sleep(3000);
 		Assert.assertEquals(demoText, "Hello Automation Guys!");
 		
 	}
 	
 	
-	@Test
+	//@Test
 	public void TC_05_Right_Click() {
 	
 			driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
@@ -140,6 +136,10 @@ public class Topic_09_User_Interactions {
 			
 			action.click(findByXpath("//span[text()='Quit']")).perform();
 			
+			Alert alert = driver.switchTo().alert();
+			
+			alert.accept();
+			
 			
 	}
 	
@@ -150,8 +150,8 @@ public class Topic_09_User_Interactions {
 		
 		driver.get("http://demos.telerik.com/kendo-ui/dragdrop/angular");
 		
-		WebElement sourceCircle = findByXpath("//div[@id='droptarget']");
-		WebElement targetCircle = findByXpath("////div[@id='draggable']");
+		WebElement targetCircle = findByXpath("//div[@id='droptarget']");
+		WebElement sourceCircle = findByXpath("//div[@id='draggable']");
 		
 		action.dragAndDrop(sourceCircle, targetCircle).perform();
 		
