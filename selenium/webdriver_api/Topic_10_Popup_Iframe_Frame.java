@@ -98,7 +98,7 @@ public class Topic_10_Popup_Iframe_Frame {
 		WebElement userLogin = driver.findElement(By.xpath("//li[@class='account dropdown wrap']//span[@class='user']"));
 		
 		Assert.assertTrue(userLogin.isDisplayed());
-		Assert.assertEquals(userLogin, "Automation FC");
+		Assert.assertEquals(userLogin.getText(), "Automation FC");
 
 	}
 	 
