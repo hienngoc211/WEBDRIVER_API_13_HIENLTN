@@ -68,7 +68,7 @@ public class Topic_11_Handle_Windows_Tabs {
 		}
 	
 	@Test
-	public void TC_02_() {
+	public void TC_02_Windows() {
 		driver.get("http://live.guru99.com/index.php/");
 		
 		driver.findElement(By.xpath("//a[text()='Mobile']"));
@@ -93,6 +93,41 @@ public class Topic_11_Handle_Windows_Tabs {
 		Assert.assertTrue(driver.findElement(By.xpath("//span[text()='The comparison list was cleared.']")).isDisplayed());
 		
 
+	}
+	@Test
+	public void TC_03_Windows() throws Exception {
+		driver.get("https://kyna.vn/");
+		List<WebElement> fancyPopup = driver.findElements(By.xpath("//img[@class='fancybox-image']"));
+		if (fancyPopup.size()>0) {
+			Assert.assertTrue(fancyPopup.get(0).isDisplayed());
+			driver.findElement(By.cssSelector(".fancybox-close")).click();
+		}
+		driver.findElement(By.xpath("facebook")).click();
+		Thread.sleep(2000);
+		switchToWindowByTitle("Kyna.vn - Trang chủ | Facebook");
+		Assert.assertEquals(driver.getTitle(), "Kyna.vn - Trang chủ | Facebook");
+		Thread.sleep(2000);
+		
+		switchToWindowByTitle("Kyna.vn - Học online cùng chuyên gia");
+		Thread.sleep(2000);
+
+		driver.findElement(By.xpath("youtube")).click();
+		Thread.sleep(2000);
+		switchToWindowByTitle("Kyna.vn - YouTube");
+		Assert.assertEquals(driver.getTitle(), "Kyna.vn - YouTube");
+		
+		switchToWindowByTitle("Kyna.vn - Học online cùng chuyên gia");
+		Thread.sleep(2000);
+		
+		driver.findElement(By.xpath("//img[@alt='zalo']")).click();
+		Thread.sleep(2000);
+		switchToWindowByTitle("Kyna.vn");
+		Assert.assertEquals(driver.getTitle(), "Kyna.vn");
+		
+		switchToWindowByTitle("Kyna.vn - Học online cùng chuyên gia");
+		Thread.sleep(2000);
+		
+		
 	}
 	
 	public void switchToWindowByID(String parentID) {
