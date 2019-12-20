@@ -16,7 +16,8 @@ import org.testng.annotations.Test;
 
 public class Topic_11_Handle_Windows_Tabs {
 	WebDriver driver;
-	
+
+			
  	@BeforeClass
 	public void beforeClass() {
  		// Khởi tạo trình duyệt 
