@@ -35,7 +35,7 @@ public class Topic_15_Wait_Part4_Implicit_Explicit {
 	waitExplicit = new WebDriverWait(driver, 10);
 	
 	// Wait ngầm định: không chờ cho một element nào có trạng thái cụ thể -> đi tìm element 
-	driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS); // 1
+	driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS); // 1
 	driver.manage().window().maximize();
 	
 	}
@@ -64,7 +64,7 @@ public class Topic_15_Wait_Part4_Implicit_Explicit {
 		// Loading icon hiển thị và mất tới 5s mới biến mất 
 		
 		// Set lại 10s cho implicit wait (3s không còn ý nghĩa) - bị ghi đè
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // 2
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS); // 2
 
 		// Check cho helloworld được hiển thị 
 		System.out.println("Start helloworld -  " + getCurrentTime());
@@ -122,7 +122,39 @@ public class Topic_15_Wait_Part4_Implicit_Explicit {
 			Assert.assertTrue(driver.findElement(helloworldTextBy).isDisplayed());
 			System.out.println("End ddisplayed -  " + getCurrentTime());
 	 }
+	 @ Test 
+	 public void TC_04_Explicit_Invisible() {
+			driver.get("http://the-internet.herokuapp.com/dynamic_loading/2");
+			
+			// Click start button
+			waitExplicit.until(ExpectedConditions.elementToBeClickable(startButtonBy));	
+			driver.findElement(startButtonBy).click();
+			
+			// Loading icon hiển thị và biến mất sau 5s 
+			System.out.println("Start wait invisible -  " + getCurrentTime());
+			waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(loadingImageBy));
+			System.out.println("End wait invisible -  " + getCurrentTime());
+		
+			// Wait cho helloworld được visible trước khi check display
+			System.out.println("Start wait visible -  " + getCurrentTime());
+			waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(helloworldTextBy));
+			System.out.println("End wait visible -  " + getCurrentTime());		
+			
+			System.out.println("Start displayed -  " + getCurrentTime());
+			Assert.assertTrue(driver.findElement(helloworldTextBy).isDisplayed());
+			System.out.println("End ddisplayed -  " + getCurrentTime());
+	 }
 	 
+	 @ Test 
+	 public void TC_05_Date_Implicit() { 
+		 driver.get("http://demos.telerik.com/aspnet-ajax/ajaxloadingpanel/functionality/explicit-show-hide/defaultcs.aspx");
+		 
+		 // In ra ngày được chọn: No Selected Dates to display
+		 WebElement dateSelectedText = driver.findElement(By.id("ctl00_ContentPlaceholder1_ctl00_ContentPlaceholder1_Label1Panel"));
+		 System.out.println("Date seclected = " + dateSelectedText );
+		 driver.findElement(By.xpath("//a[text()='7']")).click();
+
+	 }
 	public String getCurrentTime() {
 		Date date = new Date();
 		return date.toString();
