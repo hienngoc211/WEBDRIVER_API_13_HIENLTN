@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -40,7 +41,7 @@ public class Topic_15_Wait_Part4_Implicit_Explicit {
 	
 	}
 	 
-	@Test
+	// @Test
 	public void TC_01_Implicit() {
 		driver.get ("http://the-internet.herokuapp.com/dynamic_loading/2");
 		
@@ -76,7 +77,7 @@ public class Topic_15_Wait_Part4_Implicit_Explicit {
 		System.out.println("End displayed -  " + getCurrentTime());
 
 	}
-	@Test
+	//@Test
 	public void TC_02_Implicit_Overide() {
 		// Apply timeout của 1 hay 2 
 		driver.get ("http://the-internet.herokuapp.com/dynamic_loading/2");
@@ -103,7 +104,7 @@ public class Topic_15_Wait_Part4_Implicit_Explicit {
 				Assert.assertTrue(helloworldText.isDisplayed());
 				System.out.println("End displayed -  " + getCurrentTime());
 	}
-	 @ Test 
+	// @ Test 
 	 public void TC_03_Explicit_Visible() {
 			driver.get("http://the-internet.herokuapp.com/dynamic_loading/2");
 			
@@ -122,7 +123,7 @@ public class Topic_15_Wait_Part4_Implicit_Explicit {
 			Assert.assertTrue(driver.findElement(helloworldTextBy).isDisplayed());
 			System.out.println("End ddisplayed -  " + getCurrentTime());
 	 }
-	 @ Test 
+	// @ Test 
 	 public void TC_04_Explicit_Invisible() {
 			driver.get("http://the-internet.herokuapp.com/dynamic_loading/2");
 			
@@ -145,14 +146,47 @@ public class Topic_15_Wait_Part4_Implicit_Explicit {
 			System.out.println("End ddisplayed -  " + getCurrentTime());
 	 }
 	 
-	 @ Test 
+	 // @ Test 
 	 public void TC_05_Date_Implicit() { 
 		 driver.get("http://demos.telerik.com/aspnet-ajax/ajaxloadingpanel/functionality/explicit-show-hide/defaultcs.aspx");
 		 
 		 // In ra ngày được chọn: No Selected Dates to display
 		 WebElement dateSelectedText = driver.findElement(By.id("ctl00_ContentPlaceholder1_ctl00_ContentPlaceholder1_Label1Panel"));
-		 System.out.println("Date seclected = " + dateSelectedText );
+		 System.out.println("Date seclected = " + dateSelectedText.getText());
+		 Assert.assertEquals(dateSelectedText.getText(), "No Selected Dates to display.");
+
+		 // Click vào current day 
 		 driver.findElement(By.xpath("//a[text()='7']")).click();
+		 
+		 // Check cho current day = selected
+		 Assert.assertTrue(driver.findElement(By.xpath("//td[@class='rcSelected rcHover']/a[text()='7']")).isDisplayed());
+		 System.out.println("Date seclected = " + dateSelectedText.getText());
+		 Assert.assertEquals(dateSelectedText.getText(), "Tuesday, January 07, 2020");
+
+
+	 }
+	 @ Test 
+	 public void TC_06_Date_Explicit() { 
+		 driver.get("http://demos.telerik.com/aspnet-ajax/ajaxloadingpanel/functionality/explicit-show-hide/defaultcs.aspx");
+		 
+		 // In ra ngày được chọn: No Selected Dates to display
+		 WebElement dateSelectedText = driver.findElement(By.id("ctl00_ContentPlaceholder1_ctl00_ContentPlaceholder1_Label1Panel"));
+		 System.out.println("Date seclected = " + dateSelectedText.getText());
+		 Assert.assertEquals(dateSelectedText.getText(), "No Selected Dates to display.");
+
+		 // Click vào current day 
+		 driver.findElement(By.xpath("//a[text()='7']")).click();
+		 
+		 // Chờ cho loading icon biến mất 
+		 waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@styles,'possition: absolute;')]/div[@class='raDiv']")));
+		 
+		 // Check cho current day = selected
+		 Assert.assertTrue(driver.findElement(By.xpath("//td[@class='rcSelected rcHover']/a[text()='7']")).isDisplayed());
+		 
+		 dateSelectedText = driver.findElement(By.id("ctl00_ContentPlaceholder1_ctl00_ContentPlaceholder1_Label1Panel"));
+		 System.out.println("Date seclected = " + dateSelectedText.getText());
+		 Assert.assertEquals(dateSelectedText.getText(), "Tuesday, January 07, 2020");
+
 
 	 }
 	public String getCurrentTime() {
